@@ -1,0 +1,6 @@
+requests
+pefile
+dotenv
+pyzipper
+psycopg2
+pyzipper

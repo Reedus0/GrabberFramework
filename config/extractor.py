@@ -1,8 +1,8 @@
 import re
 
-from sample import Sample
+from .sample import Sample
 from .regex import Regex
-from logs.logger import log
+from ..logs.logger import log
 
 types = {
     "int32": 0,

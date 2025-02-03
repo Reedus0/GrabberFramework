@@ -4,9 +4,9 @@ import binascii
 import hashlib
 from Cryptodome.Cipher import AES
 
-from extractor import Extractor
-from sample import Sample
-from config.regex import Regex
+from ..extractor import Extractor
+from ..sample import Sample
+from ..regex import Regex
 
 def XWorm():
     def decrypt(sample: Sample, regex_result: re.Match):

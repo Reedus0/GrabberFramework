@@ -1,14 +1,19 @@
-import os
 import json
 
-from scanners.scanner import Scanner
-from logs.logger import log
+from .scanner import Scanner
+from ..logs.logger import log
 
 import requests
 
 class VirusTotal(Scanner):
+    _name = "VirusTotal"
+    __api_key = ""
+
+    def __init__(self, api_key):
+        self.__api_key = api_key
+
     def scan(self, samples: list) -> None:
-        headers = {"X-Apikey": os.environ["VIRUSTOTAL_API_LEY"]}
+        headers = {"X-Apikey": self.__api_key}
 
         for sample in samples:
             sample["related_ips"] = []

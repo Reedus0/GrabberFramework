@@ -1,4 +1,4 @@
-from logs.logger import log
+from ..logs.logger import log
 
 default_fields = {
     "sha256_hash": None,
@@ -15,9 +15,6 @@ default_fields = {
 class Collector():
     _name = ""
     _data = []
-
-    def __init__(self, name: str) -> None:
-        self._name = name
 
     def getResult(self) -> list:
         log(f"Retrieving data from {self._name} collector...")

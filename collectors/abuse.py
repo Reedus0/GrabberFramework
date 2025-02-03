@@ -2,14 +2,20 @@ import os
 import json
 from datetime import datetime
 
-from collectors.collector import Collector
-from logs.logger import log
+from .collector import Collector
+from ..logs.logger import log
 
 import requests
 
 class Abuse(Collector):
+    _name = "Abuse"
+    __api_key = ""
+
+    def __init__(self, api_key):
+        self.__api_key = api_key
+
     def collect(self) -> None:
-        headers = {"Auth-Key": os.environ["ABUSE_API_KEY"]}
+        headers = {"Auth-Key": self.__api_key}
 
         data = {
             "query": "get_recent",

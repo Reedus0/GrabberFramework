@@ -1,4 +1,4 @@
-from logs.logger import log
+from ..logs.logger import log
 
 default_fields = {
     "related_ips": [],

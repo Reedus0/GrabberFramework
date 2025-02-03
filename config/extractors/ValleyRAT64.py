@@ -1,8 +1,8 @@
 import re
 
-from extractor import Extractor
-from sample import Sample
-from config.regex import Regex
+from ..extractor import Extractor
+from ..sample import Sample
+from ..regex import Regex
 
 def ValleyRAT64():
 

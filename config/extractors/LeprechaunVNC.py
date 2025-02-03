@@ -1,5 +1,5 @@
-from extractor import Extractor
-from config.regex import Regex
+from ..extractor import Extractor
+from ..regex import Regex
 
 def LeprechaunVNC():
     c2 = Regex(

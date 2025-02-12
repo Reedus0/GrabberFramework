@@ -10,7 +10,7 @@ types = {
     "ascii_ptr": "",
     "unicode_ptr": "",
     "cli_offset": "",
-    "custom": None
+    "custom": ""
 }
 
 class Extractor():

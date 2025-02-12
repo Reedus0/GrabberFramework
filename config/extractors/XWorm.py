@@ -35,13 +35,15 @@ def XWorm():
         key[0:16] = md5
         key[15:31] = md5
 
-        host = base64.b64decode(strings[0])
+        result = base64.b64decode(strings[0])
         cipher = AES.new(bytes(key), AES.MODE_ECB)
-        print(strings)
-        decrypted_host = cipher.decrypt(bytes(host)).decode()
-        decrypted_host = re.sub(r'[^\x20-\x7f]',r'', decrypted_host) 
+        try:
+            decrypted_result = cipher.decrypt(bytes(result)).decode()
+            decrypted_result = re.sub(r'[^\x20-\x7f]',r'', decrypted_result) 
+        except:
+            return ""
 
-        return decrypted_host
+        return decrypted_result
 
     c2 = Regex(
         "c2",

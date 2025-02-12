@@ -33,6 +33,7 @@ def njrat():
             if (match):
                 return match.group(0)
             
+        return ""
     config = Regex(
         "c2",
         "custom",

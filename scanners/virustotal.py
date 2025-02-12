@@ -16,8 +16,8 @@ class VirusTotal(Scanner):
         headers = {"X-Apikey": self.__api_key}
 
         for sample in samples:
-            sample["related_ips"] = []
-            sample["related_domains"] = []
+            if("related_ips" not in sample): sample["related_ips"] = []
+            if("related_domains" not in sample): sample["related_domains"] = []
 
             r = requests.get(f"https://www.virustotal.com/api/v3/files/{sample["sha256_hash"]}/behaviours", headers=headers)
             json_response = json.loads(r.text)

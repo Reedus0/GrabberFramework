@@ -1,8 +1,6 @@
-import os
 import json
 
 import requests
-import pyzipper
 
 from .downloader import Downloader
 

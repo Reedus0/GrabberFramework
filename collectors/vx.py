@@ -40,14 +40,7 @@ class VX(Collector):
             new_sample["file_name"] = sample["submit_name"] if "submit_name" in sample else None
             new_sample["file_size"] = sample["size"] if "size" in sample else None
 
-            if("hosts" in sample):
-                new_sample["related_ips"] = sample["hosts"]
-                for host in new_sample["related_ips"]:
-                    if(len(host) > 16):
-                        print(host)
-                        new_sample["related_ips"].remove(host)
-
+            if("hosts" in sample): new_sample["related_ips"] = sample["hosts"]
             if("domains" in sample): new_sample["related_domains"] = sample["domains"]
-
 
             self._data.append(new_sample)

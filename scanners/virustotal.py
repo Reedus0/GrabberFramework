@@ -5,7 +5,7 @@ from ..logs.logger import log
 
 import requests
 
-class VirusTotal(Scanner):
+class scannerVirusTotal(Scanner):
     _name = "VirusTotal"
     __api_key = ""
 

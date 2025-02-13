@@ -39,10 +39,10 @@ class sandboxVX(Sandbox):
             r = requests.get(f"https://www.hybrid-analysis.com/api/v2/report/{file_id}/summary", headers=headers)
             json_response = json.loads(r.text)
 
-            if("job_id" in json_response):
+            if(json_response["state"] != "IN_PROGRESS"):
                 break
 
             log("Waiting for sandbox...")
-            time.sleep(10)
+            time.sleep(30)
 
         self._result = json_response

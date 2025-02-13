@@ -28,6 +28,7 @@ class sandboxVX(Sandbox):
             return
         
         log(f"Sended sample, id: {json_response["job_id"]}")
+        return json_response["job_id"]
         
     def waitForAnalysis(self, file_id):
 

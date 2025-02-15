@@ -1,6 +1,8 @@
 requests
+types-requests
 pefile
+types-pefile
 dotenv
-pyzipper
 psycopg2
+types-psycopg2
 pyzipper

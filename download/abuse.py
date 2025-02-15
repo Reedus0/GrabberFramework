@@ -6,14 +6,15 @@ import pyzipper
 
 from .downloader import Downloader
 
-class downloaderAbuse(Downloader):
-    _name = "Abuse"
-    __api_key = ""
 
-    def __init__(self, api_key):
+class downloaderAbuse(Downloader):
+    _name: str = "Abuse"
+    __api_key: str
+
+    def __init__(self, api_key) -> None:
         self.__api_key = api_key
 
-    def download(self, hash):
+    def download(self, hash) -> None:
         headers = {"Auth-Key": self.__api_key}
 
         data = {
@@ -26,8 +27,8 @@ class downloaderAbuse(Downloader):
             json.loads(r.text)
         except:
             with open(hash + ".zip", "wb") as file:
-                file.write(r.content) 
-                
+                file.write(r.content)
+
             file_name = ""
 
             with pyzipper.AESZipFile(hash + ".zip", "r", compression=pyzipper.ZIP_DEFLATED, encryption=pyzipper.WZ_AES) as zip_ref:

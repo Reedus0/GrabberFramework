@@ -2,17 +2,20 @@ import json
 import time
 import requests
 
+from typing import Any
+
 from .sandbox import Sandbox
 from ..logs.logger import log
 
-class sandboxVX(Sandbox):
-    _name = "VX"
-    __api_key = ""
 
-    def __init__(self, api_key):
+class sandboxVX(Sandbox):
+    _name: str = "VX"
+    __api_key: str
+
+    def __init__(self, api_key) -> None:
         self.__api_key = api_key
 
-    def sendToSendbox(self, file):
+    def sendToSendbox(self, file) -> Any:
         headers = {"api-key": self.__api_key}
 
         data = {
@@ -22,24 +25,24 @@ class sandboxVX(Sandbox):
 
         r = requests.post("https://www.hybrid-analysis.com/api/v2/submit/file", headers=headers, files=data)
         json_response = json.loads(r.text)
-        
-        if("job_id" not in json_response):
+
+        if ("job_id" not in json_response):
             log("Failed to send sample to VX")
             return
-        
+
         log(f"Sended sample, id: {json_response["job_id"]}")
         return json_response["job_id"]
-        
-    def waitForAnalysis(self, file_id):
+
+    def waitForAnalysis(self, file_id) -> None:
 
         headers = {"api-key": self.__api_key}
-        
-        while(1):
+
+        while (1):
 
             r = requests.get(f"https://www.hybrid-analysis.com/api/v2/report/{file_id}/summary", headers=headers)
             json_response = json.loads(r.text)
 
-            if(json_response["state"] != "IN_PROGRESS"):
+            if (json_response["state"] != "IN_PROGRESS"):
                 break
 
             log("Waiting for sandbox...")

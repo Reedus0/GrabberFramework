@@ -13,25 +13,27 @@ types = {
     "custom": ""
 }
 
-class Extractor():
-    __name: str = ""
-    __expressions: list[Regex] = []
-    __result: object = {}
 
-    def __init__(self, name: str, expressions: list[Regex]):
+class Extractor():
+    __name: str
+    __expressions: list[Regex]
+    __result: dict
+
+    def __init__(self, name: str, expressions: list[Regex]) -> None:
         self.__name = name
         self.__expressions = expressions
+        self.__result = {}
 
-    def getName(self):
+    def getName(self) -> str:
         return self.__name
-    
-    def getExpressions(self):
+
+    def getExpressions(self) -> list[Regex]:
         return self.__expressions
-    
-    def getResult(self):
+
+    def getResult(self) -> dict:
         return self.__result
-    
-    def extract(self, sample: Sample):
+
+    def extract(self, sample: Sample) -> None:
         log("Extracting, with " + self.__name + " extractor...")
 
         sample_data = sample.readSample()
@@ -43,13 +45,13 @@ class Extractor():
 
             regex_result = re.search(re.compile(config_param.getRegex()), sample_data)
 
-            if(regex_result):
+            if (regex_result):
                 extract_result = regex_result[1]
                 log("Found " + param_name + " with " + self.__name + " extractor!")
                 match(param_type):
-                    case "int32": 
+                    case "int32":
                         self.__result[param_name] = int.from_bytes(extract_result, "little")
-                    case "int32_ptr": 
+                    case "int32_ptr":
                         offset = sample.getPhysicalAddress(int.from_bytes(extract_result, "little"))
                         self.__result[param_name] = sample.readInt32(offset)
                     case "ascii_ptr":

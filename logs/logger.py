@@ -1,6 +1,7 @@
 import logging
 import os
 
+
 def init_logging(log_path):
     if not os.path.exists(log_path):
         os.makedirs(log_path, 0o777)
@@ -12,6 +13,7 @@ def init_logging(log_path):
     logging.getLogger(__name__)
 
     log("Initiated logger!")
+
 
 def log(data):
     print("[INFO]", data)

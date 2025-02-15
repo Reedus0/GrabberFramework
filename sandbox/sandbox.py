@@ -1,15 +1,17 @@
+from typing import Any
 from ..logs.logger import log
 
-class Sandbox():
-    _name = ""
-    _result = None
 
-    def getResult(self):
+class Sandbox():
+    _name: str
+    _result: dict
+
+    def getResult(self) -> dict:
         log(f"Sending to sandbox using {self._name} sandbox...")
         return self._result
-    
-    def sendToSendbox(self, file):
+
+    def sendToSendbox(self, file) -> Any:
         return
-    
-    def waitForAnalysis(self, file_id):
+
+    def waitForAnalysis(self, file_id) -> None:
         return

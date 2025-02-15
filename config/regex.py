@@ -1,3 +1,5 @@
+import typing
+
 types = {
     "int": 0,
     "ascii_ptr": "",
@@ -5,26 +7,27 @@ types = {
     "custom": None
 }
 
-class Regex():
-    __name = None
-    __type = None
-    __regex: tuple = ()
-    __custom: callable = None
 
-    def __init__(self, name, type, regex: tuple, custom: callable = None):
+class Regex():
+    __name: str
+    __type: str
+    __regex: bytes
+    __custom: typing.Callable
+
+    def __init__(self, name, type, regex: bytes, custom: typing.Callable = lambda x: x) -> None:
         self.__name = name
         self.__type = type
         self.__regex = regex
         self.__custom = custom
 
-    def getName(self):
+    def getName(self) -> str:
         return self.__name
-    
-    def getType(self):
+
+    def getType(self) -> str:
         return self.__type
-    
-    def getRegex(self):
+
+    def getRegex(self) -> bytes:
         return self.__regex
-    
-    def getCustom(self):
+
+    def getCustom(self) -> typing.Callable:
         return self.__custom

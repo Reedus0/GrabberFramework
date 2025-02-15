@@ -1,4 +1,3 @@
-import os
 import json
 from datetime import datetime
 
@@ -7,11 +6,12 @@ from ..logs.logger import log
 
 import requests
 
-class collectorAbuse(Collector):
-    _name = "Abuse"
-    __api_key = ""
 
-    def __init__(self, api_key):
+class collectorAbuse(Collector):
+    _name: str = "Abuse"
+    __api_key: str
+
+    def __init__(self, api_key) -> None:
         self.__api_key = api_key
 
     def collect(self) -> None:
@@ -24,13 +24,13 @@ class collectorAbuse(Collector):
 
         r = requests.post("https://mb-api.abuse.ch/api/v1/", headers=headers, data=data)
         json_response = json.loads(r.text)
-        
-        if(json_response["query_status"] != "ok"):
+
+        if (json_response["query_status"] != "ok"):
             log("Failed to fetch data from abuse")
             return
-        
+
         json_data = json_response["data"]
-        
+
         for sample in json_data:
             new_sample = {}
             new_sample["sha256_hash"] = sample["sha256_hash"]

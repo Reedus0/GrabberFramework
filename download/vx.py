@@ -11,6 +11,7 @@ class downloaderVX(Downloader):
 
     def __init__(self, api_key) -> None:
         self.__api_key = api_key
+        self._result = bytearray()
 
     def download(self, hash) -> None:
         headers = {"Authorization": "Bearer " + self.__api_key}

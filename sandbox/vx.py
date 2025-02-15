@@ -14,6 +14,7 @@ class sandboxVX(Sandbox):
 
     def __init__(self, api_key) -> None:
         self.__api_key = api_key
+        self._result = {}
 
     def sendToSendbox(self, file) -> Any:
         headers = {"api-key": self.__api_key}

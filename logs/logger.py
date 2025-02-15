@@ -64,9 +64,9 @@ class ConsoleLogger(Logger):
 
         match (self._level):
             case 0:
-                print(f"[{current_time:8.4f}][INFO]  " + message)
+                print(f"[{current_time:9.4f}][INFO]  " + message)
             case 10:
-                print(f"[{current_time:8.4f}][DEBUG] " + message)
+                print(f"[{current_time:9.4f}][DEBUG] " + message)
 
 
 loggers: list[Logger] = []

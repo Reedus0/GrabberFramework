@@ -1,5 +1,6 @@
 import logging
 import os
+import time
 
 logger_levels: dict = {
     "DEBUG": 0,
@@ -47,16 +48,25 @@ class FileLogger(Logger):
 
 
 class ConsoleLogger(Logger):
+
+    __start_time: float
+
+    def __init__(self, level: int) -> None:
+        self._level = level
+        self.__start_time = time.time()
+
     def log(self, level: int, message: str) -> None:
 
         if (level < self._level):
             return
 
+        current_time = time.time() - self.__start_time
+
         match (self._level):
             case 0:
-                print("[INFO]  " + message)
+                print(f"[{current_time:8.4f}][INFO]  " + message)
             case 10:
-                print("[DEBUG] " + message)
+                print(f"[{current_time:8.4f}][DEBUG] " + message)
 
 
 loggers: list[Logger] = []

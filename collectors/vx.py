@@ -13,6 +13,7 @@ class collectorVX(Collector):
 
     def __init__(self, api_key) -> None:
         self.__api_key = api_key
+        self._data = []
 
     def collect(self) -> None:
         headers = {"api-key": self.__api_key}

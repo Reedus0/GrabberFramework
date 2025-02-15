@@ -11,6 +11,7 @@ class scannerVirusTotal(Scanner):
 
     def __init__(self, api_key) -> None:
         self.__api_key = api_key
+        self._data = []
 
     def scan(self, samples: list) -> None:
         headers = {"X-Apikey": self.__api_key}

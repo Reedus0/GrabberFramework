@@ -7,7 +7,7 @@ class Sandbox():
     _result: dict
 
     def getResult(self) -> dict:
-        log(f"Sending to sandbox using {self._name} sandbox...")
+        log(0, f"Sending to sandbox using {self._name} sandbox...")
         return self._result
 
     def sendToSendbox(self, file) -> Any:

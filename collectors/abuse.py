@@ -26,7 +26,7 @@ class collectorAbuse(Collector):
         json_response = json.loads(r.text)
 
         if (json_response["query_status"] != "ok"):
-            log("Failed to fetch data from abuse")
+            log(0, "Failed to fetch data from abuse")
             return
 
         json_data = json_response["data"]

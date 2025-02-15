@@ -1,20 +1,75 @@
 import logging
 import os
 
-
-def init_logging(log_path):
-    if not os.path.exists(log_path):
-        os.makedirs(log_path, 0o777)
-
-    logging.basicConfig(
-        filename=log_path + "/log.txt", format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
-    )
-
-    logging.getLogger(__name__)
-
-    log("Initiated logger!")
+logger_levels: dict = {
+    "DEBUG": 0,
+    "INFO": 10
+}
 
 
-def log(data):
-    print("[INFO]", data)
-    logging.info(data)
+class Logger():
+
+    _level: int
+
+    def __init__(self, level: int) -> None:
+        self._level = level
+
+    def log(self, level: int, message: str) -> None:
+        return
+
+
+class FileLogger(Logger):
+
+    def __init__(self, level: int, log_path: str) -> None:
+        self._level = level
+
+        if not os.path.exists(log_path):
+            os.makedirs(log_path, 0o777)
+
+        logging.basicConfig(
+            filename=log_path + "/log.txt", format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
+        )
+
+        logging.getLogger(__name__)
+
+    def log(self, level: int, message: str) -> None:
+
+        global logger_levels
+
+        if (level < self._level):
+            return
+
+        match (self._level):
+            case 0:
+                logging.info(message)
+            case 10:
+                logging.debug(message)
+
+
+class ConsoleLogger(Logger):
+    def log(self, level: int, message: str) -> None:
+
+        if (level < self._level):
+            return
+
+        match (self._level):
+            case 0:
+                print("[INFO]  " + message)
+            case 10:
+                print("[DEBUG] " + message)
+
+
+loggers: list[Logger] = []
+
+
+def initLogging(level: int, log_path: str):
+
+    loggers.append(ConsoleLogger(level))
+    loggers.append(FileLogger(level, log_path))
+
+    log(0, "Initiated logger!")
+
+
+def log(level: int, message: str):
+    for logger in loggers:
+        logger.log(level, message)

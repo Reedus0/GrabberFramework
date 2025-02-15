@@ -6,7 +6,7 @@ class Downloader():
     _result: bytes
 
     def getResult(self) -> bytes:
-        log(f"Downloading sample using {self._name} downloader...")
+        log(0, f"Downloading sample using {self._name} downloader...")
         return self._result
 
     def download(self, hash) -> None:

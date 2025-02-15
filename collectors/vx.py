@@ -21,7 +21,7 @@ class collectorVX(Collector):
         json_response = json.loads(r.text)
 
         if (json_response["status"] != "ok"):
-            log("Failed to fetch data from VX")
+            log(0, "Failed to fetch data from VX")
             return
 
         json_data = json_response["data"]

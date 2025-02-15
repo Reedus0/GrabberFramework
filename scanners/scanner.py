@@ -14,7 +14,7 @@ class Scanner():
         self._name = name
 
     def getResult(self) -> list:
-        log(0, f"Scanning data with {self._name} scanner...")
+        log(10, f"Scanning data with {self._name} scanner...")
         for sample in self._data:
             for field in default_fields.keys():
                 if (field not in sample or sample[field] is None):

@@ -14,9 +14,9 @@ class DB():
                                                      password=password, host=host, port=port)
                 break
             except:
-                log(0, "Trying to connect to sql server...")
+                log(10, "Trying to connect to sql server...")
 
-        log(0, "Initiated DB connection!")
+        log(10, "Initiated DB connection!")
 
     def querySamples(self, sql):
         result = []

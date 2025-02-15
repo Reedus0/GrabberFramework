@@ -42,9 +42,9 @@ class FileLogger(Logger):
 
         match (self._level):
             case 0:
-                logging.info(message)
-            case 10:
                 logging.debug(message)
+            case 10:
+                logging.info(message)
 
 
 class ConsoleLogger(Logger):
@@ -64,9 +64,9 @@ class ConsoleLogger(Logger):
 
         match (self._level):
             case 0:
-                print(f"[{current_time:9.4f}][INFO]  " + message)
-            case 10:
                 print(f"[{current_time:9.4f}][DEBUG] " + message)
+            case 10:
+                print(f"[{current_time:9.4f}][INFO]  " + message)
 
 
 loggers: list[Logger] = []
@@ -77,7 +77,7 @@ def initLogging(level: int, log_path: str):
     loggers.append(ConsoleLogger(level))
     loggers.append(FileLogger(level, log_path))
 
-    log(0, "Initiated logger!")
+    log(10, "Initiated logger!")
 
 
 def log(level: int, message: str):

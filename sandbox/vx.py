@@ -28,10 +28,10 @@ class sandboxVX(Sandbox):
         json_response = json.loads(r.text)
 
         if ("job_id" not in json_response):
-            log(0, "Failed to send sample to VX")
+            log(10, "Failed to send sample to VX")
             return
 
-        log(0, f"Sended sample, id: {json_response["job_id"]}")
+        log(10, f"Sended sample, id: {json_response["job_id"]}")
         return json_response["job_id"]
 
     def waitForAnalysis(self, file_id) -> None:
@@ -46,7 +46,7 @@ class sandboxVX(Sandbox):
             if (json_response["state"] != "IN_PROGRESS"):
                 break
 
-            log(0, "Waiting for sandbox...")
+            log(10, "Waiting for sandbox...")
             time.sleep(30)
 
         self._result = json_response

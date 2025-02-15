@@ -34,9 +34,9 @@ class Extractor():
         return self.__result
 
     def extract(self, sample: Sample) -> None:
-        log(0, "Extracting, with " + self.__name + " extractor...")
+        log(0, f"Extracting with {self.__name} extractor...")
 
-        sample_data = sample.readSample()
+        sample_data = sample.getData()
 
         for config_param in self.__expressions:
 
@@ -47,7 +47,11 @@ class Extractor():
 
             if (regex_result):
                 extract_result = regex_result[1]
-                log(0, "Found " + param_name + " with " + self.__name + " extractor!")
+
+                virtual_address = hex(sample.getVirtualAddress(regex_result.start()))
+                physical_address = hex(regex_result.start())
+
+                log(10, f"Found {param_name} at {virtual_address}({physical_address}) with {self.__name} extractor!")
                 match(param_type):
                     case "int32":
                         self.__result[param_name] = int.from_bytes(extract_result, "little")
@@ -66,5 +70,5 @@ class Extractor():
                     case "custom":
                         self.__result[param_name] = config_param.getCustom()(sample, regex_result)
             else:
-                log(0, "Didn't find " + param_name + " with " + self.__name + " extractor!")
+                log(0, f"Didn't find {param_name} with {self.__name} extractor...")
                 self.__result[param_name] = types[param_type]

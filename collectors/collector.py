@@ -18,7 +18,7 @@ class Collector():
     _data: list
 
     def getResult(self) -> list:
-        log(0, f"Retrieving data from {self._name} collector...")
+        log(10, f"Retrieving data from {self._name} collector...")
         for sample in self._data:
             for field in default_fields.keys():
                 if (field not in sample or sample[field] is None):

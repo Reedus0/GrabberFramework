@@ -8,9 +8,13 @@ class Sample():
 
     def __init__(self, path: str) -> None:
         self.__path = path
+        self.__data = self.readSample()
 
-    def getData(self) -> bytes | None:
+    def getData(self) -> bytes:
         return self.__data
+
+    def setData(self, new_data: bytes) -> None:
+        self.__data = new_data
 
     def readSample(self) -> bytes:
         with open(self.__path, "rb") as file:
@@ -26,7 +30,7 @@ class Sample():
         else:
             return self.readUnicodeString(offset)
 
-    def getPhysicalAddress(self, virutal_address):
+    def getPhysicalAddress(self, virutal_address) -> int:
         pe = pefile.PE(self.__path)
 
         for section in pe.sections:
@@ -35,8 +39,10 @@ class Sample():
 
             if (section_address <= virutal_address < section_address + section_size + pe.OPTIONAL_HEADER.ImageBase):
                 return section.PointerToRawData + (virutal_address - section_address - pe.OPTIONAL_HEADER.ImageBase)
+            
+        return 0
 
-    def getVirtualAddress(self, physical_address):
+    def getVirtualAddress(self, physical_address) -> int:
         pe = pefile.PE(self.__path)
 
         for section in pe.sections:
@@ -45,7 +51,9 @@ class Sample():
                 virtual_address = section.VirtualAddress + offset_in_section + pe.OPTIONAL_HEADER.ImageBase
                 return virtual_address
 
-    def readASCIIString(self, offset):
+        return 0
+
+    def readASCIIString(self, offset) -> str:
         result = []
 
         while (self.__data[offset]):
@@ -54,7 +62,7 @@ class Sample():
 
         return "".join(result)
 
-    def readUnicodeString(self, offset):
+    def readUnicodeString(self, offset) -> str:
         result = []
 
         while (self.__data[offset] or self.__data[offset + 1]):
@@ -63,7 +71,7 @@ class Sample():
 
         return "".join(result)
 
-    def readBytesString(self, offset):
+    def readBytesString(self, offset) -> list:
         result = []
 
         while (self.__data[offset]):
@@ -72,7 +80,7 @@ class Sample():
 
         return result
 
-    def readCLIString(self, offset):
+    def readCLIString(self, offset) -> str:
         # Reference: https://ecma-international.org/wp-content/uploads/ECMA-335_6th_edition_june_2012.pdf
         result = []
 
@@ -97,7 +105,7 @@ class Sample():
 
         return "".join(result)
 
-    def readInt32(self, offset):
+    def readInt32(self, offset) -> int:
         result = []
         for i in range(4):
             result.append(self.__data[offset + i])

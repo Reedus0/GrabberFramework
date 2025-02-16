@@ -35,12 +35,10 @@ class FileLogger(Logger):
 
     def log(self, level: int, message: str) -> None:
 
-        global logger_levels
-
         if (level < self._level):
             return
 
-        match (self._level):
+        match (level):
             case 0:
                 logging.debug(message)
             case 10:
@@ -62,7 +60,7 @@ class ConsoleLogger(Logger):
 
         current_time = time.time() - self.__start_time
 
-        match (self._level):
+        match (level):
             case 0:
                 print(f"[{current_time:9.4f}][DEBUG] " + message)
             case 10:

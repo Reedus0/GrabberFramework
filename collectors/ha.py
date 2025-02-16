@@ -7,8 +7,8 @@ from ..logs.logger import log
 import requests
 
 
-class VXCollector(Collector):
-    _name: str = "VX"
+class HybridAnalysisCollector(Collector):
+    _name: str = "HybridAnalysis"
     __api_key: str
 
     def __init__(self, api_key) -> None:
@@ -22,7 +22,7 @@ class VXCollector(Collector):
         json_response = json.loads(r.text)
 
         if (json_response["status"] != "ok"):
-            log(10, "Failed to fetch data from VX")
+            log(10, "Failed to fetch data from HybridAnalysis")
             return
 
         json_data = json_response["data"]

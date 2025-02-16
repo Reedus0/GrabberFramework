@@ -8,8 +8,8 @@ from .sandbox import Sandbox
 from ..logs.logger import log
 
 
-class VXSandbox(Sandbox):
-    _name: str = "VX"
+class HybridAnalysisSandbox(Sandbox):
+    _name: str = "HybridAnalysis"
     __api_key: str
 
     def __init__(self, api_key) -> None:
@@ -28,7 +28,7 @@ class VXSandbox(Sandbox):
         json_response = json.loads(r.text)
 
         if ("job_id" not in json_response):
-            log(10, "Failed to send sample to VX")
+            log(10, "Failed to send sample to HybridAnalysis")
             return
 
         log(10, f"Sended sample, id: {json_response["job_id"]}")

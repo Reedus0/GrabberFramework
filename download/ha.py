@@ -5,8 +5,8 @@ import requests
 from .downloader import Downloader
 
 
-class VXDownloader(Downloader):
-    _name: str = "VX"
+class HybridAnalysisDownloader(Downloader):
+    _name: str = "HybridAnalysis"
     __api_key: str
 
     def __init__(self, api_key) -> None:

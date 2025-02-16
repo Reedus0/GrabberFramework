@@ -5,7 +5,7 @@ from .scanner import Scanner
 import requests
 
 
-class scannerVirusTotal(Scanner):
+class VirusTotalScanner(Scanner):
     _name = "VirusTotal"
     __api_key = ""
 

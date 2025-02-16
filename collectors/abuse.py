@@ -7,7 +7,7 @@ from ..logs.logger import log
 import requests
 
 
-class collectorAbuse(Collector):
+class AbuseCollector(Collector):
     _name: str = "Abuse"
     __api_key: str
 

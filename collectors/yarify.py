@@ -7,7 +7,7 @@ from ..logs.logger import log
 import requests
 
 
-class collectorYarify(Collector):
+class YarifyCollector(Collector):
     _name: str = "Yarify"
     __api_key: str
 

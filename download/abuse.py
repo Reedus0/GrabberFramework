@@ -7,7 +7,7 @@ import pyzipper
 from .downloader import Downloader
 
 
-class downloaderAbuse(Downloader):
+class AbuseDownloader(Downloader):
     _name: str = "Abuse"
     __api_key: str
 

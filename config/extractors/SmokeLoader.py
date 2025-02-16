@@ -9,7 +9,9 @@ def SmokeLoader():
 
     def get_final_stage(sample: Sample, regex_result: re.Match):
         if (regex_result):
-            return [int.from_bytes(regex_result.group(1), "little"), int.from_bytes(regex_result.group(2), "little")]
+            offset = int.from_bytes(regex_result.group(1), "little")
+            size = int.from_bytes(regex_result.group(2), "little")
+            return [offset, size]
         return None
 
     final_stage = Regex(

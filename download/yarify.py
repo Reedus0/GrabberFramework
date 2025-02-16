@@ -7,7 +7,7 @@ import pyzipper
 from .downloader import Downloader
 
 
-class downloaderYarify(Downloader):
+class YarifyDownloader(Downloader):
     _name = "Yarify"
     __api_key = ""
 

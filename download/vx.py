@@ -5,7 +5,7 @@ import requests
 from .downloader import Downloader
 
 
-class downloaderVX(Downloader):
+class VXDownloader(Downloader):
     _name: str = "VX"
     __api_key: str
 

@@ -7,7 +7,7 @@ from ..logs.logger import log
 import requests
 
 
-class collectorVX(Collector):
+class VXCollector(Collector):
     _name: str = "VX"
     __api_key: str
 

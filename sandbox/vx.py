@@ -8,7 +8,7 @@ from .sandbox import Sandbox
 from ..logs.logger import log
 
 
-class sandboxVX(Sandbox):
+class VXSandbox(Sandbox):
     _name: str = "VX"
     __api_key: str
 

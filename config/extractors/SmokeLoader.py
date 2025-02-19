@@ -8,23 +8,27 @@ from ..regex import Regex
 from Cryptodome.Cipher import ARC4
 
 
-def SmokeLoader():
+def SmokeLoader(lib_path: str):
 
     def decompress(buffer):
-        out = []
-        lzsa = ctypes.CDLL('Grabber/config/extractors/lzsa.so')
+        if (buffer[-1] != 0xE8 and buffer[-1] != 0xEE):
+            return []
+        if (buffer[-1] == 0xEE):
+            buffer[-1] = 0xE8
+            
+        lzsa = ctypes.CDLL(lib_path + "/" + "lzsa.so")
 
         lzsa.lzsa2_decompress.argtypes = [ctypes.POINTER(ctypes.c_char), ctypes.POINTER(ctypes.c_char)]
 
         pointer_buffer = (ctypes.c_char * len(buffer))(*buffer)
-        pointer_out = (ctypes.c_char * 100000)()
+        pointer_out = (ctypes.c_char * 0x40000)()
 
         lzsa.lzsa2_decompress(
             ctypes.cast(pointer_out, ctypes.POINTER(ctypes.c_char)),
             ctypes.cast(pointer_buffer, ctypes.POINTER(ctypes.c_char))
         )
 
-        return out
+        return pointer_out[:]
 
     def decrypt_strings(data, strings_start):
         key = bytes(data[strings_start:strings_start + 4])
@@ -103,23 +107,26 @@ def SmokeLoader():
         for i in range(final_size):
             final_data.append(original_data[physical_offset + i] ^ bytes_key[i % len(bytes_key)])
 
-        print(decompress(final_data[5:-1]))
+        with open("out", "wb") as file:
+            file.write(bytes(final_data))
 
-        # strings_start = 0
+        decompressed_data = decompress(final_data[4:])
 
-        # for i in range(0x400, 0x800):
-        #     key = bytes(final_data[i:i + 4])
-        #     data = bytes(final_data[i + 5: i + 9])
+        strings_start = 0
 
-        #     cipher = ARC4.new(key)
-        #     msg = cipher.decrypt(data)
-        #     if (msg == b"http"):
-        #         strings_start = i
-        #         break
-        # else:
-        #     return ""
+        for i in range(len(decompressed_data)):
+            key = bytes(decompressed_data[i:i + 4])
+            data = bytes(decompressed_data[i + 5: i + 9])
 
-        # decrypt_strings(final_data, strings_start)
+            cipher = ARC4.new(key)
+            msg = cipher.decrypt(data)
+            if (msg == b"http"):
+                strings_start = i
+                break
+        else:
+            return ""
+
+        decrypt_strings(decompressed_data, strings_start)
 
     c2 = Regex(
         "c2",

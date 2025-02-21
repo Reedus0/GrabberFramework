@@ -6,9 +6,12 @@ class Sample():
     __path: str
     __data: bytes
 
-    def __init__(self, path: str) -> None:
-        self.__path = path
-        self.__data = self.readSample()
+    def __init__(self, path: str | None = None) -> None:
+        if (path):
+            self.__path = path
+            self.__data = self.readSample()
+        else:
+            self.__path = ""
 
     def getData(self) -> bytes:
         return self.__data
@@ -18,7 +21,10 @@ class Sample():
 
     def readSample(self) -> bytes:
         with open(self.__path, "rb") as file:
-            self.__data = file.read()
+            try:
+                self.__data = file.read()
+            except FileNotFoundError:
+                self.__data = bytearray()
 
         return self.__data
 
@@ -31,7 +37,10 @@ class Sample():
             return self.readUnicodeString(offset)
 
     def getPhysicalAddress(self, virutal_address) -> int:
-        pe = pefile.PE(self.__path)
+        try:
+            pe = pefile.PE(self.__path)
+        except FileNotFoundError:
+            return virutal_address
 
         for section in pe.sections:
             section_address = section.VirtualAddress
@@ -39,11 +48,14 @@ class Sample():
 
             if (section_address <= virutal_address < section_address + section_size + pe.OPTIONAL_HEADER.ImageBase):
                 return section.PointerToRawData + (virutal_address - section_address - pe.OPTIONAL_HEADER.ImageBase)
-            
+
         return 0
 
     def getVirtualAddress(self, physical_address) -> int:
-        pe = pefile.PE(self.__path)
+        try:
+            pe = pefile.PE(self.__path)
+        except FileNotFoundError:
+            return physical_address
 
         for section in pe.sections:
             if section.PointerToRawData <= physical_address < (section.PointerToRawData + section.SizeOfRawData):

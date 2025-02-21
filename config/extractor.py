@@ -5,10 +5,13 @@ from .regex import Regex
 from ..logs.logger import log
 
 types = {
+    "int16": 0,
+    "int16_ptr": 0,
     "int32": 0,
     "int32_ptr": 0,
     "ascii_ptr": "",
     "unicode_ptr": "",
+    "bytes_ptr": "",
     "cli_offset": "",
     "custom": ""
 }
@@ -47,15 +50,15 @@ class Extractor():
 
             if (regex_result):
                 extract_result = regex_result[1]
-
+                
                 virtual_address = hex(sample.getVirtualAddress(regex_result.start()))
                 physical_address = hex(regex_result.start())
 
                 log(10, f"Found {param_name} at {virtual_address}({physical_address}) with {self.__name} extractor!")
                 match(param_type):
-                    case "int32":
+                    case "int32" | "int16":
                         self.__result[param_name] = int.from_bytes(extract_result, "little")
-                    case "int32_ptr":
+                    case "int32_ptr" | "int16_ptr":
                         offset = sample.getPhysicalAddress(int.from_bytes(extract_result, "little"))
                         self.__result[param_name] = sample.readInt32(offset)
                     case "ascii_ptr":
@@ -64,6 +67,9 @@ class Extractor():
                     case "unicode_ptr":
                         offset = sample.getPhysicalAddress(int.from_bytes(extract_result, "little"))
                         self.__result[param_name] = sample.readUnicodeString(offset)
+                    case "bytes_ptr":
+                        offset = sample.getPhysicalAddress(int.from_bytes(extract_result, "little"))
+                        self.__result[param_name] = sample.readBytesString(offset)
                     case "cli_offset":
                         offset = int.from_bytes(extract_result, "little")
                         self.__result[param_name] = sample.readCLIString(offset)

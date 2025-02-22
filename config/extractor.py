@@ -45,8 +45,9 @@ class Extractor():
 
             param_name = config_param.getName()
             param_type = config_param.getType()
+            param_regex = config_param.getRegex()
 
-            regex_result = re.search(re.compile(config_param.getRegex()), sample_data)
+            regex_result = re.search(re.compile(param_regex), sample_data)
 
             if (regex_result):
                 extract_result = regex_result[1]

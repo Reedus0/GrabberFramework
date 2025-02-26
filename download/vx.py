@@ -19,7 +19,12 @@ class VXDownloader(Downloader):
         r = requests.get("https://virus.exchange/api/samples/" + hash, headers=headers)
         try:
             json_response = json.loads(r.text)
+
+            if ("errors" in json_response):
+                return
+
             link = json_response["download_link"]
+
             if (link):
                 sample = requests.get(link).content
                 self._result = sample

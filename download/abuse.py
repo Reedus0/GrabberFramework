@@ -26,7 +26,7 @@ class AbuseDownloader(Downloader):
         r = requests.post("https://mb-api.abuse.ch/api/v1/", headers=headers, data=data)
         try:
             json.loads(r.text)
-        except:
+        except ValueError:
             with open(hash + ".zip", "wb") as file:
                 file.write(r.content)
 

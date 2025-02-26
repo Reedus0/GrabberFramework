@@ -26,7 +26,7 @@ class YarifyDownloader(Downloader):
         r = requests.post("https://yaraify-api.abuse.ch/api/v1/", headers=headers, json=data)
         try:
             json.loads(r.text)
-        except:
+        except ValueError:
             with open(hash + ".zip", "wb") as file:
                 file.write(r.content)
 

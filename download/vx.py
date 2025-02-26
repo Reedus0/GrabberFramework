@@ -5,8 +5,8 @@ import requests
 from .downloader import Downloader
 
 
-class HybridAnalysisDownloader(Downloader):
-    _name: str = "HybridAnalysis"
+class VXDownloader(Downloader):
+    _name: str = "VX"
     __api_key: str
 
     def __init__(self, api_key) -> None:
@@ -23,5 +23,5 @@ class HybridAnalysisDownloader(Downloader):
             if (link):
                 sample = requests.get(link).content
                 self._result = sample
-        except:
+        except ValueError:
             pass

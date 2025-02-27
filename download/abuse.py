@@ -33,7 +33,13 @@ class AbuseDownloader(Downloader):
             file_name = ""
 
             with pyzipper.AESZipFile(hash + ".zip", "r", compression=pyzipper.ZIP_DEFLATED, encryption=pyzipper.WZ_AES) as zip_ref:
-                zip_ref.extractall(".", pwd="infected".encode())
+                try:
+                    zip_ref.extractall(".", pwd="infected".encode())
+                except EOFError:
+                    zip_ref.close()
+                    os.remove(hash + ".zip")
+                    return
+
                 file_name = zip_ref.namelist()[0]
             os.remove(hash + ".zip")
 

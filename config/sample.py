@@ -112,7 +112,7 @@ class Sample():
 
         physical_address = metadata.start() + int.from_bytes(us_section_offset, "little") + offset
 
-        for i in range(0, self.__data[physical_address], 2):
+        for i in range(0, self.__data[physical_address] - 1, 2):
             result.append(chr(self.__data[physical_address + i + 1]))
 
         return "".join(result)

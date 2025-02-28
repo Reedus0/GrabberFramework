@@ -5,6 +5,7 @@ from .regex import Regex
 from ..logs.logger import log
 
 types = {
+    "raw": "",
     "int16": 0,
     "int16_ptr": 0,
     "int32": 0,
@@ -57,6 +58,8 @@ class Extractor():
 
                 log(10, f"Found {param_name} at {virtual_address}({physical_address}) with {self.__name} extractor!")
                 match(param_type):
+                    case "raw":
+                        self.__result[param_name] = extract_result
                     case "int32" | "int16":
                         self.__result[param_name] = int.from_bytes(extract_result, "little")
                     case "int32_ptr" | "int16_ptr":

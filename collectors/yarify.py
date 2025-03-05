@@ -35,7 +35,7 @@ class YarifyCollector(Collector):
             data: dict = {
                 "query": "get_yara",
                 "search_term": rule["rule_name"],
-                "result_max": 5
+                "result_max": 100
             }
 
             r = requests.post("https://yaraify-api.abuse.ch/api/v1/", headers=headers, json=data)

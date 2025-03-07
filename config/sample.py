@@ -28,14 +28,6 @@ class Sample():
 
         return self.__data
 
-    def getString(self, address) -> str:
-        offset = self.getPhysicalAddress(address)
-
-        if (self.__data[offset + 1]):
-            return self.readASCIIString(offset)
-        else:
-            return self.readUnicodeString(offset)
-
     def getPhysicalAddress(self, virutal_address) -> int:
         try:
             pe = pefile.PE(self.__path)
@@ -43,11 +35,15 @@ class Sample():
             return virutal_address
 
         for section in pe.sections:
+
             section_address = section.VirtualAddress
             section_size = section.Misc_VirtualSize
 
             if (section_address <= virutal_address < section_address + section_size + pe.OPTIONAL_HEADER.ImageBase):
-                return section.PointerToRawData + (virutal_address - section_address - pe.OPTIONAL_HEADER.ImageBase)
+                physical_address = section.PointerToRawData + (virutal_address - section_address - pe.OPTIONAL_HEADER.ImageBase)
+                if (physical_address < 0):
+                    physical_address += pe.OPTIONAL_HEADER.ImageBase
+                return physical_address
 
         return 0
 
@@ -61,6 +57,8 @@ class Sample():
             if section.PointerToRawData <= physical_address < (section.PointerToRawData + section.SizeOfRawData):
                 offset_in_section = physical_address - section.PointerToRawData
                 virtual_address = section.VirtualAddress + offset_in_section + pe.OPTIONAL_HEADER.ImageBase
+                if (virtual_address < 0):
+                    virtual_address += pe.OPTIONAL_HEADER.ImageBase
                 return virtual_address
 
         return 0
@@ -116,6 +114,24 @@ class Sample():
             result.append(chr(self.__data[physical_address + i + 1]))
 
         return "".join(result)
+
+    def readTableField(self, table, offset) -> list:
+        metadata_regex = b"\x42\x53\x4A\x42"
+        metadata = re.search(re.compile(metadata_regex), self.__data)
+
+        if (not metadata):
+            return []
+
+        tables_section_regex = b"(.{4}).{4}#~\x00"
+        tables_section = re.search(re.compile(tables_section_regex), self.__data)
+
+        if (not tables_section):
+            return []
+
+        tables_section_offset = tables_section[1]
+        physical_address = metadata.start() + int.from_bytes(tables_section_offset, "little")
+
+        return []
 
     def readInt32(self, offset) -> int:
         result = []

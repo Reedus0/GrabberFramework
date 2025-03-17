@@ -4,7 +4,8 @@ import time
 
 logger_levels: dict = {
     "DEBUG": 0,
-    "INFO": 10
+    "INFO": 10,
+    "ERROR": 20
 }
 
 
@@ -43,6 +44,8 @@ class FileLogger(Logger):
                 logging.debug(message)
             case 10:
                 logging.info(message)
+            case 20:
+                logging.error(message)
 
 
 class ConsoleLogger(Logger):
@@ -65,6 +68,8 @@ class ConsoleLogger(Logger):
                 print(f"[{current_time:9.4f}][DEBUG] " + message)
             case 10:
                 print(f"[{current_time:9.4f}][INFO]  " + message)
+            case 20:
+                print(f"[{current_time:9.4f}][ERROR] " + message)
 
 
 loggers: list[Logger] = []

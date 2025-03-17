@@ -19,7 +19,11 @@ class HybridAnalysisCollector(Collector):
         headers = {"api-key": self.__api_key}
 
         r = requests.get("https://www.hybrid-analysis.com/api/v2/feed/latest", headers=headers)
-        json_response = json.loads(r.text)
+        try:
+            json_response = json.loads(r.text)
+        except json.decoder.JSONDecodeError:
+            log(10, "Failed to fetch data from HybridAnalysis")
+            return
 
         if (json_response["status"] != "ok"):
             log(10, "Failed to fetch data from HybridAnalysis")

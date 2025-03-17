@@ -9,7 +9,9 @@ default_fields: dict = {
     "last_seen": None,
     "file_name": None,
     "file_size": -1,
-    "tags": []
+    "tags": [],
+    "related_ips": [],
+    "related_domains": []
 }
 
 
@@ -22,7 +24,10 @@ class Collector():
         for sample in self._data:
             for field in default_fields.keys():
                 if (field not in sample or sample[field] is None):
-                    sample[field] = default_fields[field]
+                    if (type(default_fields[field]) is type([])):
+                        sample[field] = []
+                    else:
+                        sample[field] = default_fields[field]
         return self._data
 
     def collect(self) -> None:

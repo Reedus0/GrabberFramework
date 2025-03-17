@@ -30,38 +30,36 @@ class Sample():
 
     def getPhysicalAddress(self, virutal_address) -> int:
         try:
-            pe = pefile.PE(self.__path)
+            with pefile.PE(self.__path) as pe:
+                for section in pe.sections:
+
+                    section_address = section.VirtualAddress
+                    section_size = section.Misc_VirtualSize
+
+                    if (section_address <= virutal_address < section_address + section_size + pe.OPTIONAL_HEADER.ImageBase):
+                        physical_address = section.PointerToRawData + (virutal_address - section_address - pe.OPTIONAL_HEADER.ImageBase)
+                        if (physical_address < 0):
+                            physical_address += pe.OPTIONAL_HEADER.ImageBase
+                        return physical_address
+                return 0
+
         except FileNotFoundError:
             return virutal_address
 
-        for section in pe.sections:
-
-            section_address = section.VirtualAddress
-            section_size = section.Misc_VirtualSize
-
-            if (section_address <= virutal_address < section_address + section_size + pe.OPTIONAL_HEADER.ImageBase):
-                physical_address = section.PointerToRawData + (virutal_address - section_address - pe.OPTIONAL_HEADER.ImageBase)
-                if (physical_address < 0):
-                    physical_address += pe.OPTIONAL_HEADER.ImageBase
-                return physical_address
-
-        return 0
-
     def getVirtualAddress(self, physical_address) -> int:
         try:
-            pe = pefile.PE(self.__path)
+            with pefile.PE(self.__path) as pe:
+                for section in pe.sections:
+                    if section.PointerToRawData <= physical_address < (section.PointerToRawData + section.SizeOfRawData):
+                        offset_in_section = physical_address - section.PointerToRawData
+                        virtual_address = section.VirtualAddress + offset_in_section + pe.OPTIONAL_HEADER.ImageBase
+                        if (virtual_address < 0):
+                            virtual_address += pe.OPTIONAL_HEADER.ImageBase
+                        return virtual_address
+
+                return 0
         except FileNotFoundError:
             return physical_address
-
-        for section in pe.sections:
-            if section.PointerToRawData <= physical_address < (section.PointerToRawData + section.SizeOfRawData):
-                offset_in_section = physical_address - section.PointerToRawData
-                virtual_address = section.VirtualAddress + offset_in_section + pe.OPTIONAL_HEADER.ImageBase
-                if (virtual_address < 0):
-                    virtual_address += pe.OPTIONAL_HEADER.ImageBase
-                return virtual_address
-
-        return 0
 
     def readASCIIString(self, offset) -> str:
         result = []

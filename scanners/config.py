@@ -26,7 +26,7 @@ class ConfigScanner(Scanner):
                 result = extractor.getResult()
 
                 address_regex = "([\w-]+\.){1,}[\w-]+"
-                ip_regex = "\d{1,3}\.{3}\d{1,3}"
+                ip_regex = "(\d{1,3}\.){3}\d{1,3}"
 
                 for field in result.keys():
                     current_field = [result[field]]

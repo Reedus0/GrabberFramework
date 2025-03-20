@@ -42,7 +42,7 @@ class YarifyCollector(Collector):
             json_response = json.loads(r.text)
 
             if (json_response["query_status"] != "ok"):
-                log(10, "Failed to fetch data from yarify")
+                log(10, "Failed to fetch data from yarify. Rule: " + rule["rule_name"])
                 continue
 
             sample_data = json_response["data"]

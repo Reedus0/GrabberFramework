@@ -33,7 +33,6 @@ class ConfigScanner(Scanner):
                         worker.extract(sample_file)
                         result = {**result, **worker.getResult()}
 
-
                 address_regex = r"([\w-]+\.){1,}[\w-]+"
                 ip_regex = r"(\d{1,3}\.){3}\d{1,3}"
 

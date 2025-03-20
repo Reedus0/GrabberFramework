@@ -35,7 +35,7 @@ class YarifyCollector(Collector):
             data: dict = {
                 "query": "get_yara",
                 "search_term": rule["rule_name"],
-                "result_max": 10
+                "result_max": 25
             }
 
             r = requests.post("https://yaraify-api.abuse.ch/api/v1/", headers=headers, json=data)
@@ -43,7 +43,7 @@ class YarifyCollector(Collector):
 
             if (json_response["query_status"] != "ok"):
                 log(10, "Failed to fetch data from yarify")
-                return
+                continue
 
             sample_data = json_response["data"]
 

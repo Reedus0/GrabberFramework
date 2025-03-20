@@ -4,6 +4,8 @@ import yara
 
 from .scanner import Scanner
 
+from ..logs.logger import log
+
 
 class YaraScanner(Scanner):
     _name = "Yara"
@@ -42,6 +44,8 @@ class YaraScanner(Scanner):
             return sample
 
         if (match):
-            sample["malware_family"] = match[0].rule
+            family = match[0].rule
+            log(10, "Found sample family: " + family)
+            sample["malware_family"] = family
 
         return sample

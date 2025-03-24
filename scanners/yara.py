@@ -8,9 +8,9 @@ from ..logs.logger import log
 
 
 class YaraScanner(Scanner):
-    _name = "Yara"
-    __rules_path = ""
-    __samples_path = ""
+    _name: str = "Yara"
+    __rules_path: str
+    __samples_path: str
 
     def __init__(self, rules_path, samples_path) -> None:
         self._data = []

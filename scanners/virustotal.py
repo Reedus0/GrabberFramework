@@ -6,8 +6,8 @@ import requests
 
 
 class VirusTotalScanner(Scanner):
-    _name = "VirusTotal"
-    __api_key = ""
+    _name: str = "VirusTotal"
+    __api_key: str
 
     def __init__(self, api_key) -> None:
         self.__api_key = api_key

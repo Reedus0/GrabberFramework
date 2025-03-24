@@ -9,9 +9,9 @@ from ..config.sample import Sample
 
 
 class ConfigScanner(Scanner):
-    _name = "Config"
-    __samples_path = ""
-    __extractors = {}
+    _name: str = "Config"
+    __samples_path: str
+    __extractors: dict
 
     def __init__(self, samples_path, extractors) -> None:
         self._data = []

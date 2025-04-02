@@ -52,7 +52,7 @@ class Extractor():
 
             if (regex_result):
                 extract_result = regex_result[1]
-                
+
                 virtual_address = hex(sample.getVirtualAddress(regex_result.start()))
                 physical_address = hex(regex_result.start())
 

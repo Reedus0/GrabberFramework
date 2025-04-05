@@ -48,7 +48,7 @@ class Extractor():
             param_type = config_param.getType()
             param_regex = config_param.getRegex()
 
-            regex_result = re.search(re.compile(param_regex), sample_data)
+            regex_result = re.search(re.compile(param_regex, flags=re.DOTALL | re.MULTILINE), sample_data)
 
             if (regex_result):
                 extract_result = regex_result[1]

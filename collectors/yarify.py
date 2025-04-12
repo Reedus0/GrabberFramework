@@ -10,9 +10,11 @@ import requests
 class YarifyCollector(Collector):
     _name: str = "Yarify"
     __api_key: str
+    __count: int
 
-    def __init__(self, api_key) -> None:
+    def __init__(self, api_key, count) -> None:
         self.__api_key = api_key
+        self.__count = count
         self._data = []
 
     def collect(self) -> None:
@@ -35,7 +37,7 @@ class YarifyCollector(Collector):
             data: dict = {
                 "query": "get_yara",
                 "search_term": rule["rule_name"],
-                "result_max": 25
+                "result_max": self.__count
             }
 
             r = requests.post("https://yaraify-api.abuse.ch/api/v1/", headers=headers, json=data)

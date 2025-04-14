@@ -28,7 +28,7 @@ class HybridAnalysisSandbox(Sandbox):
         json_response = json.loads(r.text)
 
         if ("job_id" not in json_response):
-            log(10, "Failed to send sample to HybridAnalysis")
+            log(20, "Failed to send sample to HybridAnalysis")
             return
 
         log(10, f"Sended sample, id: {json_response["job_id"]}")

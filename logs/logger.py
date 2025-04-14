@@ -68,13 +68,13 @@ class ConsoleLogger(Logger):
 
         match (level):
             case 0:
-                print(f"[{current_time:9.4f}][DEBUG   ] " + message)
+                print(f"[{current_time:9.5f}][DEBUG   ] " + message)
             case 10:
-                print(f"[{current_time:9.4f}][INFO    ] " + message)
+                print(f"[{current_time:9.5f}][INFO    ] " + message)
             case 20:
-                print(f"[{current_time:9.4f}][ERROR   ] " + message)
+                print(f"[{current_time:9.5f}][ERROR   ] " + message)
             case 30:
-                print(f"[{current_time:9.4f}][CRITICAL] " + message)
+                print(f"[{current_time:9.5f}][CRITICAL] " + message)
 
 
 loggers: list[Logger] = []

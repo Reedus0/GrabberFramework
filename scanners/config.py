@@ -42,6 +42,9 @@ class ConfigScanner(Scanner):
                     if (type(result[field]) is type([])):
                         current_field = result[field]
 
+                    if (type(result[field]) is type(0)):
+                        continue
+
                     for array_field in current_field:
                         address_regex_result = re.search(address_regex, array_field)
                         if (address_regex_result):

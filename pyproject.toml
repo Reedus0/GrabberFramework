@@ -5,6 +5,7 @@ description = "Utils for malware analisys"
 authors = [
     { name="Reedus", email="alex58456557@gmail.com" }
 ]
+
 dependencies = [
     "requests",
     "types-requests",
@@ -15,6 +16,18 @@ dependencies = [
     "types-psycopg2",
     "pyzipper",
     "yara-python"
+]
+
+[tool.setuptools]
+packages = [
+    "collectors",
+    "config",
+    "db",
+    "download",
+    "logs",
+    "mimic",
+    "sandbox",
+    "scanners"
 ]
 
 [build-system]

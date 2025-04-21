@@ -1,9 +1,0 @@
-requests
-types-requests
-pefile
-types-pefile
-dotenv
-psycopg2
-types-psycopg2
-pyzipper
-yara-python

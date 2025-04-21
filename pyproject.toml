@@ -1,0 +1,22 @@
+[project]
+name = "Grabber"
+version = "1.0.0"
+description = "Utils for malware analisys"
+authors = [
+    { name="Reedus", email="alex58456557@gmail.com" }
+]
+dependencies = [
+    "requests",
+    "types-requests",
+    "pefile",
+    "types-pefile",
+    "dotenv",
+    "psycopg2",
+    "types-psycopg2",
+    "pyzipper",
+    "yara-python"
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"

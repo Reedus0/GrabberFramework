@@ -22,4 +22,4 @@ class Processor():
         if (isinstance(self.__result, Sample)):
             return self.__result
         else:
-            raise TypeError("result is not Sample")
+            raise TypeError("Result is not Sample!")

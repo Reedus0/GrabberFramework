@@ -15,7 +15,8 @@ dependencies = [
     "psycopg2",
     "types-psycopg2",
     "pyzipper",
-    "yara-python"
+    "yara-python",
+    "py3dbg"
 ]
 
 [tool.setuptools]
@@ -27,7 +28,8 @@ packages = [
     "logs",
     "mimic",
     "sandbox",
-    "scanners"
+    "scanners",
+    "debug"
 ]
 
 [build-system]
